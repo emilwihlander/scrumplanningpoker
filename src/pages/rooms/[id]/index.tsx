@@ -63,11 +63,11 @@ export default function ScrumPoker() {
       handleEvent(e),
     );
     setListener(eventSource);
-  }, [roomId]);
+  });
 
   useEffect(() => {
     fetchRoom(roomId);
-  }, [roomId]);
+  });
 
   return (
     <div className="pt-8 bg-slate-50 w-screen min-h-screen flex flex-col items-center">

@@ -17,7 +17,7 @@ export default function ParticipantsHidden({
     <Fragment>
       <div className="mx-12 flex flex-wrap justify-center gap-3">
         {participants.map((p) => (
-          <ParticipantBadge participant={p} />
+          <ParticipantBadge key={p.id} participant={p} />
         ))}
       </div>
       <div className="mt-4 flex justify-center">

@@ -33,7 +33,7 @@ function getRow(card: string, participants: Member[]) {
       <TableCell>
         <div className="flex gap-3">
           {participants.map((p) => (
-            <ParticipantBadge participant={p} />
+            <ParticipantBadge key={p.id} participant={p} />
           ))}
         </div>
       </TableCell>
