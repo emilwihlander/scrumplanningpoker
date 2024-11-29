@@ -2,6 +2,8 @@ import { addRoomListener, RoomEvent } from "@/services/events";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== "GET") return res.status(405).end();
+
   const { id: roomId, userId } = req.query;
 
   if (!roomId) return res.status(404).end();
