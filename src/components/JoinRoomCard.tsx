@@ -24,7 +24,7 @@ export function JoinRoomForm({ roomId, userId, owner }: JoinRoomFormProps) {
         <CardTitle>Welcome to {owner.name}&apos;s room!</CardTitle>
         <CardDescription>Enter your name to enter the room.</CardDescription>
       </CardHeader>
-      <form action={`/api/rooms/${roomId}/join`} method="POST">
+      <form action={`/api/rooms/${roomId}/join`} method="GET">
         <CardContent>
           <input name="userId" type="hidden" value={userId} />
           <div className="grid w-full items-center gap-4">

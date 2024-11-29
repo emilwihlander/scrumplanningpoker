@@ -21,7 +21,7 @@ export function CreateRoomForm(props: { userId: string }) {
           Allow your team to easily align on estimation.
         </CardDescription>
       </CardHeader>
-      <form action="/api/rooms" method="POST">
+      <form action="/api/rooms" method="GET">
         <CardContent>
           <input name="userId" type="hidden" value={props.userId} />
           <div className="grid w-full items-center gap-4">

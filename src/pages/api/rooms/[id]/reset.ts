@@ -5,8 +5,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method !== "PUT") return res.status(405).end();
-
   const { id: roomId } = req.query;
 
   await roomService.resetRoom(roomId as string);
