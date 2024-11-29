@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,8 +9,17 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRef } from "react";
 
-export function CreateRoomForm(props: { userId: string }) {
+export function CreateRoomForm(props: { onSubmit: (name: string) => void }) {
+  const nameRef = useRef<HTMLInputElement>(null);
+
+  async function onSubmit() {
+    const name = nameRef.current?.value;
+    if (name) {
+      props.onSubmit(name);
+    }
+  }
   return (
     <Card className="w-[350px]">
       <CardHeader>
@@ -21,20 +28,22 @@ export function CreateRoomForm(props: { userId: string }) {
           Allow your team to easily align on estimation.
         </CardDescription>
       </CardHeader>
-      <form action="/api/rooms" method="POST">
-        <CardContent>
-          <input name="userId" type="hidden" value={props.userId} />
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" placeholder="Max Mustermann" />
-            </div>
+      <CardContent>
+        <div className="grid w-full items-center gap-4">
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              name="name"
+              placeholder="Max Mustermann"
+              ref={nameRef}
+            />
           </div>
-        </CardContent>
-        <CardFooter className="flex justify-end">
-          <Button type="submit">Create</Button>
-        </CardFooter>
-      </form>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-end">
+        <Button onClick={() => onSubmit()}>Create</Button>
+      </CardFooter>
     </Card>
   );
 }

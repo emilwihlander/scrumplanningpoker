@@ -8,7 +8,7 @@ export default async function handler(
   if (req.method !== "PUT") return res.status(405).end();
 
   const { id: roomId } = req.query;
-  const { userId, card } = JSON.parse(req.body);
+  const { userId, card } = req.body;
 
   await roomService.selectCard(roomId as string, userId, card);
   res.status(200).end();

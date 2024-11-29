@@ -11,5 +11,5 @@ export default async function handler(
   const { userId, name } = req.body;
 
   await roomService.joinRoom(roomId as string, userId, name);
-  res.redirect(`/rooms/${roomId}`);
+  res.status(200).end();
 }

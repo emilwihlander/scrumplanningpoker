@@ -9,5 +9,5 @@ export default async function handler(
 
   const { userId, name } = req.body;
   const room = await roomService.create(userId, name);
-  res.redirect(`/rooms/${room.id}`);
+  res.status(200).json(room);
 }

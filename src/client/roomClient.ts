@@ -1,6 +1,32 @@
 import { RoomEvent } from "@/services/events";
 import { Room, RoomService } from "@/services/rooms";
 
+async function create(userId: string, name: string): Promise<Room> {
+  const res = await fetch("/api/rooms", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId, name }),
+  });
+
+  return res.json();
+}
+
+async function joinRoom(
+  roomId: string,
+  userId: string,
+  name: string,
+): Promise<void> {
+  await fetch(`/api/rooms/${roomId}/join`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId, name }),
+  });
+}
+
 async function get(roomId: string): Promise<Room | null> {
   if (!roomId) return null;
   const res = await fetch(`/api/rooms/${roomId}`);
@@ -15,6 +41,9 @@ async function get(roomId: string): Promise<Room | null> {
 async function selectCard(roomId: string, userId: string, card: string) {
   await fetch(`/api/rooms/${roomId}/select_card`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ userId, card }),
   });
 }
@@ -26,6 +55,9 @@ async function resetRoom(roomId: string) {
 async function setHidden(roomId: string, hidden: boolean) {
   await fetch(`/api/rooms/${roomId}/set_hidden`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ hidden }),
   });
 }
@@ -44,7 +76,7 @@ function registerListener(
   return eventSource;
 }
 
-export type RoomClient = Omit<RoomService, "create" | "joinRoom"> & {
+export type RoomClient = RoomService & {
   registerListener: (
     roomId: string,
     userId: string,
@@ -53,8 +85,10 @@ export type RoomClient = Omit<RoomService, "create" | "joinRoom"> & {
 };
 
 export const roomClient: RoomClient = {
+  create,
   get,
   selectCard,
+  joinRoom,
   resetRoom,
   setHidden,
   registerListener,

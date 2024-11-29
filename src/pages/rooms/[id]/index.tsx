@@ -63,11 +63,11 @@ export default function ScrumPoker() {
       handleEvent(e),
     );
     setListener(eventSource);
-  });
+  }, [roomId, userId]);
 
   useEffect(() => {
     fetchRoom(roomId);
-  });
+  }, [roomId]);
 
   return (
     <div className="pt-8 bg-slate-50 w-screen min-h-screen flex flex-col items-center">
@@ -98,7 +98,10 @@ export default function ScrumPoker() {
             />
           )}
           {ready && needToJoin && (
-            <JoinRoomForm roomId={roomId} userId={userId} owner={owner} />
+            <JoinRoomForm
+              owner={owner}
+              onSubmit={(name) => roomClient.joinRoom(roomId, userId, name)}
+            />
           )}
         </div>
         {ready && !needToJoin && (
